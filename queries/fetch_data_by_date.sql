@@ -1,0 +1,12 @@
+SELECT
+    CONVERT(DATE, DATEADD({STEP}, DATEDIFF({STEP}, 0, DATEADD(SECOND, device_time, '19700101')), 0)) AS Date,
+    COUNT(*) AS UserCount
+FROM
+    sampled_activity_data
+WHERE
+    device_time >= DATEDIFF(SECOND, '19700101', '{START_DATE}') AND
+    device_time < DATEDIFF(SECOND, '19700101', '{END_DATE}')
+GROUP BY
+    CONVERT(DATE, DATEADD({STEP}, DATEDIFF({STEP}, 0, DATEADD(SECOND, device_time, '19700101')), 0))
+ORDER BY
+    Date;
