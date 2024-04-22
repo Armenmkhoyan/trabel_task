@@ -1,19 +1,23 @@
+import logging
+import os
 import sys
 
 import pyodbc
 from dotenv import load_dotenv
-import os
-import logging
 
 load_dotenv()
 
-database = os.getenv('DB_DATABASE')
-server = os.getenv('DB_SERVER')
-username = os.getenv('DB_USERNAME')
-password = os.getenv('DB_PASSWORD')
-driver = os.getenv('DB_DRIVER')
+database = os.getenv("DB_DATABASE")
+server = os.getenv("DB_SERVER")
+username = os.getenv("DB_USERNAME")
+password = os.getenv("DB_PASSWORD")
+driver = os.getenv("DB_DRIVER")
 
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s', stream=sys.stdout)
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s",
+    stream=sys.stdout,
+)
 
 
 def insert_data_into_db(conn_str: str, query: str, data: list):
@@ -28,11 +32,13 @@ def insert_data_into_db(conn_str: str, query: str, data: list):
 
 
 def get_db_connection(database_name: str = database):
-    conn_str = f'DRIVER={driver};SERVER={server};DATABASE={database_name};UID={username};PWD={password}'
+    conn_str = f"DRIVER={driver};SERVER={server};DATABASE={database_name};UID={username};PWD={password}"
     return pyodbc.connect(conn_str, autocommit=True)
 
 
-def execute_sql_query(sql: str, database_name: str = database, return_result: bool = False) -> list or None:
+def execute_sql_query(
+    sql: str, database_name: str = database, return_result: bool = False
+) -> list or None:
     try:
         with get_db_connection(database_name) as conn:
             with conn.cursor() as cursor:

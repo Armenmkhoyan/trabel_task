@@ -1,4 +1,3 @@
-
 start_date = "2024-03-15"
 end_date = "2024-05-15"
 
@@ -127,5 +126,3 @@ screen_name_action = {
         "following_click",
     ],
 }
-
-
